@@ -1,19 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Symfony\Component\HttpFoundation\Request;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
-Route::get('/search',function (){
-    return view('search');
-} );
-
-Route::post('/home',function (Request $request){
-    return view('home',['name'=>'kara','na'=>$request->input("descpription"),'names'=>['kara','oussama','home','dd']]);
-} );
-Route::get('/form',function (){
-    return view('form');
+Route::get('/citys',function (){
+    return view('citys');
+});
+Route::get('/login',function (){
+    return view('login');
 });

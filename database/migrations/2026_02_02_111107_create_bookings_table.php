@@ -4,22 +4,35 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+
+           
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            $table->foreignId('trip_id')
+                ->constrained('trips')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            $table->foreignId('segment_id')
+                ->constrained('segments')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            $table->unsignedInteger('seats_count')->default(1);
+            $table->boolean('is_paid')->default(false);
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('bookings');

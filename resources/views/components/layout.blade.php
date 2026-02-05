@@ -1,31 +1,128 @@
-@props(['title'=>'Default Title','pageName'=>'Default Page'])
-@props(['kae'=>'haiiiiiiiiiiiii'])
+@props(['title'=>'Book Bus'])
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ $title }}</title>
-	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 	<style>
-		.card{
-			color:white; 
-			background-color:black;
-			padding:.4rem;
+	:root{
+		--bg:#9b9b9b;           
+		--panel:#111;
+		--panel2:#1a1a1a;
+		--text:#111;
+		--text-inv:#fff;
+		--muted:rgba(255,255,255,.75);
+		--border:rgba(255,255,255,.20);
+		--shadow:0 16px 45px rgba(0,0,0,.25);
+		--radius:14px;
+	}
+
+	*{
+		padding:0;
+		margin:0;
+		text-decoration:none;
+		color:inherit;             
+		box-sizing:border-box;
+	}
+
+	body{
+		background:
+			linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.20)),
+			var(--bg);
+		color:var(--text);
+		font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+		min-height:100vh;
+	}
+
+	footer{
+		position:sticky;
+		top:0;
+		z-index:20;
+		box-shadow: 0 10px 30px rgba(0,0,0,.18);
+	}
+
+	#title{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		text-align:center;
+		color:var(--text-inv);
+		font-weight:800;
+		background: linear-gradient(90deg, #000, #1a1a1a);
+		font-size:2rem;
+		border-bottom:1px solid var(--border);
+		padding:14px 10px;
+		letter-spacing:1px;
+	}
+
+	.navbar{
+		display:flex;
+		gap:12px;
+		background: rgba(0,0,0,.92);
+		padding:10px 8px;
+		border-bottom:1px solid rgba(255,255,255,.12);
+	}
+
+	.navbar a{
+		color:var(--text-inv);
+		font-size:1.1rem;
+		padding:10px 14px;
+		border-radius:12px;
+		transition: .18s ease;
+		border:1px solid transparent;
+	}
+
+	.navbar a:hover{
+		font-weight:700;
+		background: rgba(255,255,255,.10);
+		border-color: rgba(255,255,255,.18);
+		transform: translateY(-1px);
+	}
+	.navbar .login-btn{
+		margin-left:auto;
+}
+
+	.navbar a:focus{
+		outline:none;
+		box-shadow: 0 0 0 4px rgba(255,255,255,.18);
+	}
+
+	main{
+		padding:22px 0 40px;
+	}
+
+	
+	main > *{
+		width:min(1100px, 92%);
+		margin:0 auto;
+	}
+
+	@media (max-width: 520px){
+		#title{ font-size:1.6rem; }
+		.navbar{
+			flex-wrap:wrap;
+			gap:8px;
 		}
-		
-	</style>
+		.navbar a{ width:100%; text-align:center; }
+	}
+</style>
+
 </head>
 <body>
-	<h1>{{ $pageName }}</h1>
-	<h3>{{ $kae }}</h3>
-	<ul>
-		<li><a href="/home">home tab</a></li> 
-	   	<li><a href="/search">Search tab</a></li> 
-	   	<li><a href="/form">form tab</a></li> 
-	   	<li><a href="/">welcome tab</a></li>
-   </ul>
-
+	<footer>
+	<span id="title">BOOK-BUS</span>
+	<nav class="navbar">
+		<a href="/">Home</a>
+		<a href="/offers">Offers</a>
+		<a href="/login" class="login-btn">Login</a>
+			
+		
+	</nav>		
+	</footer>
+	<main class="">
 	{{ $slot }}
+		
+	</main>
 </body>
 </html>
