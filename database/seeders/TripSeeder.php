@@ -13,7 +13,7 @@ class TripSeeder extends Seeder
 
         $rows = [];
         foreach ($schedules as $schedule) {
-            // create 3 trips per schedule (next 3 days)
+
             for ($d = 1; $d <= 3; $d++) {
                 $rows[] = [
                     'schedule_id' => $schedule->id,

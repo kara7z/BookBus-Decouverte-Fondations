@@ -14,7 +14,7 @@ class ScheduleSeeder extends Seeder
 
         $rows = [];
         foreach ($routes as $route) {
-            // 2 schedules per route
+
             $rows[] = ['route_id' => $route->id, 'departure_time' => $times[array_rand($times)], 'created_at' => now(), 'updated_at' => now()];
             $rows[] = ['route_id' => $route->id, 'departure_time' => $times[array_rand($times)], 'created_at' => now(), 'updated_at' => now()];
         }

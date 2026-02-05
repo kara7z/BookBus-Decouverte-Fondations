@@ -11,7 +11,6 @@ class FareSeeder extends Seeder
     {
         $routeId = fn(string $code) => DB::table('routes')->where('code', $code)->value('id');
 
-        // Map stop name -> stop id for route L101
         $l101Id = $routeId('L101');
 
         $stopIdByGareName = function (int $routeId, string $gareName) {
@@ -26,13 +25,13 @@ class FareSeeder extends Seeder
         $l101Settat  = $stopIdByGareName($l101Id, 'Settat Gare');
         $l101Marr    = $stopIdByGareName($l101Id, 'Marrakech Gare');
 
-        // Hardcoded independent prices for L101 segments
+
         $fixedPrices = [
-            // Casa -> Settat
+
             "{$l101Casa}-{$l101Settat}" => 50,
-            // Settat -> Marrakech
+
             "{$l101Settat}-{$l101Marr}" => 70,
-            // Casa -> Marrakech (NOT additive, independent)
+
             "{$l101Casa}-{$l101Marr}"   => 120,
         ];
 

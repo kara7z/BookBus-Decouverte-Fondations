@@ -19,7 +19,7 @@ class SegmentSeeder extends Seeder
                 ->get()
                 ->values();
 
-            // Create every valid segment i -> j (i < j)
+
             for ($i = 0; $i < $stops->count(); $i++) {
                 for ($j = $i + 1; $j < $stops->count(); $j++) {
                     $rows[] = [

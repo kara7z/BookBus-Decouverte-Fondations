@@ -14,7 +14,7 @@ class BusSeeder extends Seeder
 
         $rows = [];
         for ($i = 1; $i <= 20; $i++) {
-            // Morocco-ish plate style (demo): 12345-A-6
+
             $plate = str_pad((string)(1000 + $i * 37), 5, '0', STR_PAD_LEFT) . '-A-6';
 
             $rows[] = [

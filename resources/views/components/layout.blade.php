@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ $title }}</title>
-	<style>
+<style>
 	:root{
 		--bg:#9b9b9b;           
 		--panel:#111;
@@ -17,7 +17,6 @@
 		--shadow:0 16px 45px rgba(0,0,0,.25);
 		--radius:14px;
 	}
-
 	*{
 		padding:0;
 		margin:0;
@@ -25,7 +24,6 @@
 		color:inherit;             
 		box-sizing:border-box;
 	}
-
 	body{
 		background:
 			linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.20)),
@@ -34,14 +32,12 @@
 		font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
 		min-height:100vh;
 	}
-
 	footer{
 		position:sticky;
 		top:0;
 		z-index:20;
 		box-shadow: 0 10px 30px rgba(0,0,0,.18);
 	}
-
 	#title{
 		display:flex;
 		justify-content:center;
@@ -55,7 +51,6 @@
 		padding:14px 10px;
 		letter-spacing:1px;
 	}
-
 	.navbar{
 		display:flex;
 		gap:12px;
@@ -63,7 +58,6 @@
 		padding:10px 8px;
 		border-bottom:1px solid rgba(255,255,255,.12);
 	}
-
 	.navbar a{
 		color:var(--text-inv);
 		font-size:1.1rem;
@@ -72,7 +66,6 @@
 		transition: .18s ease;
 		border:1px solid transparent;
 	}
-
 	.navbar a:hover{
 		font-weight:700;
 		background: rgba(255,255,255,.10);
@@ -81,23 +74,18 @@
 	}
 	.navbar .login-btn{
 		margin-left:auto;
-}
-
+	}
 	.navbar a:focus{
 		outline:none;
 		box-shadow: 0 0 0 4px rgba(255,255,255,.18);
 	}
-
 	main{
 		padding:22px 0 40px;
 	}
-
-	
 	main > *{
 		width:min(1100px, 92%);
 		margin:0 auto;
 	}
-
 	@media (max-width: 520px){
 		#title{ font-size:1.6rem; }
 		.navbar{
@@ -116,13 +104,10 @@
 		<a href="/">Home</a>
 		<a href="/offers">Offers</a>
 		<a href="/login" class="login-btn">Login</a>
-			
-		
 	</nav>		
 	</footer>
-	<main class="">
+	<main>
 	{{ $slot }}
-		
 	</main>
 </body>
 </html>

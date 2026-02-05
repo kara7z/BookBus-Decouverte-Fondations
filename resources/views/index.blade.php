@@ -1,19 +1,22 @@
 <x-layout title="Book Bus - Home">
-<form class="search-engine" action="/search" method="GET">
+<form class="search-engine" action="/offers" method="GET">
 	<span id="s-title">Search Engine</span>
 
 	<div class="s-inputs">
-		<select name="from">
-			<option value="" disabled selected>Start City</option>
-			<option value="Hello1">Hello</option>
-			<option value="Hello2">Hello</option>
+		<select name="from" id="from">
+		    <option value="" disabled selected>Start City</option>
+		    @foreach($cities as $city)
+		        <option value="{{ $city }}">{{ $city }}</option>
+		    @endforeach
 		</select>
 
-		<select name="to">
-			<option value="" disabled selected>End City</option>
-			<option value="Hello1">Hello</option>
-			<option value="Hello2">Hello</option>
+		<select name="to" id="to">
+		    <option value="" disabled selected>End City</option>
+		    @foreach($cities as $city)
+		        <option value="{{ $city }}">{{ $city }}</option>
+		    @endforeach
 		</select>
+
 
 		<input type="date" name="date">
 	</div>
@@ -104,3 +107,28 @@
 	}
 </style>
 </x-layout>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const from = document.getElementById('from');
+  const to   = document.getElementById('to');
+
+  function syncToOptions() {
+    const selectedFrom = from.value;
+
+    Array.from(to.options).forEach(opt => {
+      if (!opt.value) return; 
+      const same = opt.value === selectedFrom;
+      opt.disabled = same;
+      opt.hidden   = same;
+    });
+
+    if (to.value === selectedFrom) {
+      to.value = '';
+    }
+    to.focus();
+  }
+
+  from.addEventListener('change', syncToOptions);
+  syncToOptions();
+});
+</script>
