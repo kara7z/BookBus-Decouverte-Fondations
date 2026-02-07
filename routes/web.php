@@ -1,19 +1,39 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Auth\SessionsController;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\BookingController;
+use App\Models\Offer;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 Route::get('/', function () {
-    $cities = DB::table('cities')->get()->pluck('name');
-    return view('index',['cities'=>$cities]);
+    $cities = Offer::query()
+        ->select('from_city as city')
+        ->union(Offer::query()->select('to_city as city'))
+        ->distinct()
+        ->orderBy('city')
+        ->pluck('city');
+
+    return view('index', compact('cities'));
 });
-Route::get('/offers',function (){
-    return view('offers');
+
+Route::get('/offers', [OfferController::class, 'index']);
+
+Route::get('/register', [UserController::class, 'create']);
+Route::post('/register', [UserController::class, 'store']);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionsController::class, 'create'])->name('login');
+    Route::post('/login', [SessionsController::class, 'store'])->name('login.store');
 });
-Route::get('/login',function (){
-    return view('login');
-});
-Route::get('/register',function (){
-    return view('register');
+
+Route::delete('/logout', [SessionsController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 });

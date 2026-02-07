@@ -7,7 +7,7 @@
 	<title>{{ $title }}</title>
 <style>
 	:root{
-		--bg:#9b9b9b;           
+		--bg:#9b9b9b;
 		--panel:#111;
 		--panel2:#1a1a1a;
 		--text:#111;
@@ -21,7 +21,7 @@
 		padding:0;
 		margin:0;
 		text-decoration:none;
-		color:inherit;             
+		color:inherit;
 		box-sizing:border-box;
 	}
 	body{
@@ -58,7 +58,11 @@
 		padding:10px 8px;
 		border-bottom:1px solid rgba(255,255,255,.12);
 	}
-	.navbar a{
+	.navbar button{
+		cursor: pointer;
+		background:none;
+	}
+	.navbar a,.navbar button{
 		color:var(--text-inv);
 		font-size:1.1rem;
 		padding:10px 14px;
@@ -66,7 +70,7 @@
 		transition: .18s ease;
 		border:1px solid transparent;
 	}
-	.navbar a:hover{
+	.navbar a:hover ,.navbar button:hover{
 		font-weight:700;
 		background: rgba(255,255,255,.10);
 		border-color: rgba(255,255,255,.18);
@@ -75,7 +79,7 @@
 	.navbar .login-btn{
 		margin-left:auto;
 	}
-	.navbar a:focus{
+	.navbar a:focus ,.navbar button:focus{
 		outline:none;
 		box-shadow: 0 0 0 4px rgba(255,255,255,.18);
 	}
@@ -92,7 +96,7 @@
 			flex-wrap:wrap;
 			gap:8px;
 		}
-		.navbar a{ width:100%; text-align:center; }
+		.navbar a ,.navbar button{ width:100%; text-align:center; }
 	}
 </style>
 
@@ -103,11 +107,27 @@
 	<nav class="navbar">
 		<a href="/">Home</a>
 		<a href="/offers">Offers</a>
-		<a href="/login" class="login-btn">Login</a>
-	</nav>		
+
+		@auth
+			<a href="{{ route('bookings.index') }}">My bookings</a>
+		@endauth
+
+		@guest
+			<a href="/login" class="login-btn">Login</a>
+		@endguest
+
+		@auth
+			<form action="{{ url('logout') }}" method="POST" style=" margin-left:auto;">
+				@csrf
+				@method('DELETE')
+				<button type="submit" class="login-btn">log-out</button>
+			</form>
+		@endauth
+	</nav>
 	</footer>
+
 	<main>
-	{{ $slot }}
+		{{ $slot }}
 	</main>
 </body>
 </html>

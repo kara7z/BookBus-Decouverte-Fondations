@@ -3,22 +3,29 @@
 	<span id="s-title">Search Engine</span>
 
 	<div class="s-inputs">
-		<select name="from" id="from">
-		    <option value="" disabled selected>Start City</option>
+		<select name="from" id="from" required>
+		    <option value="" disabled {{ request('from') ? '' : 'selected' }}>Start City</option>
 		    @foreach($cities as $city)
-		        <option value="{{ $city }}">{{ $city }}</option>
+		        <option value="{{ $city }}" {{ request('from') == $city ? 'selected' : '' }}>
+		            {{ $city }}
+		        </option>
 		    @endforeach
 		</select>
 
-		<select name="to" id="to">
-		    <option value="" disabled selected>End City</option>
+		<select name="to" id="to" required>
+		    <option value="" disabled {{ request('to') ? '' : 'selected' }}>End City</option>
 		    @foreach($cities as $city)
-		        <option value="{{ $city }}">{{ $city }}</option>
+		        <option value="{{ $city }}" {{ request('to') == $city ? 'selected' : '' }}>
+		            {{ $city }}
+		        </option>
 		    @endforeach
 		</select>
 
-
-		<input type="date" name="date">
+  		<input
+  		type="date"	name="date" value="{{ request('date') }}"
+		min="{{ now()->toDateString() }}"
+  		max="{{ now()->addDays(14)->toDateString() }}" 
+  		required>
 	</div>
 
 	<button class="s-btn" type="submit">Search</button>
@@ -106,29 +113,28 @@
 		.s-btn{ width: 100%; }
 	}
 </style>
-</x-layout>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const from = document.getElementById('from');
-  const to   = document.getElementById('to');
+   document.addEventListener('DOMContentLoaded', () => {
+     const from = document.getElementById('from');
+     const to   = document.getElementById('to');
 
-  function syncToOptions() {
-    const selectedFrom = from.value;
+     function syncToOptions() {
+       const selectedFrom = from.value;
 
-    Array.from(to.options).forEach(opt => {
-      if (!opt.value) return; 
-      const same = opt.value === selectedFrom;
-      opt.disabled = same;
-      opt.hidden   = same;
-    });
+       Array.from(to.options).forEach(opt => {
+         if (!opt.value) return;
+         const same = opt.value === selectedFrom;
+         opt.disabled = same;
+         opt.hidden   = same;
+       });
 
-    if (to.value === selectedFrom) {
-      to.value = '';
-    }
-    to.focus();
-  }
+       if (to.value === selectedFrom) {
+         to.value = '';
+       }
+     }
 
-  from.addEventListener('change', syncToOptions);
-  syncToOptions();
-});
+     from.addEventListener('change', syncToOptions);
+     syncToOptions();
+   });
 </script>
+</x-layout>

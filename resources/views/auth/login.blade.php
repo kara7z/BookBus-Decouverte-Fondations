@@ -1,48 +1,43 @@
-<x-layout title="Book Bus - Register">
+<x-layout title="Book Bus - Login">
 
-<form class="register-card" action="/register" method="POST">
+<form class="login-card" action="/login" method="POST">
 	@csrf
+	<span id="l-title">Login</span>
+	<p class="l-sub">Welcome back — enter your account details.</p>
 
-	<span id="r-title">Create Account</span>
-	<p class="r-sub">Join Book Bus — it takes only a minute.</p>
-
-	<div class="r-group">
-		<label class="r-label" for="name">Full Name</label>
-		<input class="r-field" id="name" name="name" type="text" placeholder="Your name" required>
+	<div class="l-group">
+		<label class="l-label" for="email">Email</label>
+		<input class="l-field" id="email" name="email" type="email" placeholder="example@mail.com" required>
 	</div>
 
-	<div class="r-group">
-		<label class="r-label" for="email">Email</label>
-		<input class="r-field" id="email" name="email" type="email" placeholder="example@mail.com" required>
+	<div class="l-group">
+		<label class="l-label" for="password">Password</label>
+		<input class="l-field" id="password" name="password" type="password" placeholder="••••••••" required>
+	</div>
+	<x-forms.error></x-forms.error>
+
+	<div class="l-row">
+		<label class="remember">
+			<input type="checkbox" name="remember">
+			<span>Remember me</span>
+		</label>
+
+		<a class="l-link" href="/forgot-password">Forgot password?</a>
 	</div>
 
-	<div class="r-group">
-		<label class="r-label" for="password">Password</label>
-		<input class="r-field" id="password" name="password" type="password" placeholder="Create a password" required>
-	</div>
+	<button class="l-btn" type="submit">Login</button>
 
-	<div class="r-group">
-		<label class="r-label" for="password_confirmation">Confirm Password</label>
-		<input class="r-field" id="password_confirmation" name="password_confirmation" type="password" placeholder="Repeat password" required>
-	</div>
-
-	<label class="terms">
-		<input type="checkbox" name="terms" required>
-		<span>I agree to the <a class="r-link" href="/terms">terms</a> and <a class="r-link" href="/privacy">privacy policy</a>.</span>
-	</label>
-
-	<button class="r-btn" type="submit">Register</button>
-
-	<p class="r-bottom">
-		Already have an account?
-		<a class="r-link" href="/login">Login</a>
+	<p class="l-bottom">
+		Don’t have an account?
+		<a class="l-link" href="/register">Create one</a>
 	</p>
 </form>
 
 
 <style>
-	.register-card{
-		width:min(560px, 92%);
+	/* same vibe as your home "search-engine" card */
+	.login-card{
+		width:min(520px, 92%);
 		margin: 26px auto 0;
 		background: rgba(255,255,255,.22);
 		border:1px solid rgba(255,255,255,.35);
@@ -52,7 +47,7 @@
 		backdrop-filter: blur(8px);
 	}
 
-	#r-title{
+	#l-title{
 		display:block;
 		font-size: 2rem;
 		font-weight: 800;
@@ -62,17 +57,17 @@
 		margin-bottom: 6px;
 	}
 
-	.r-sub{
+	.l-sub{
 		text-align:center;
 		color: rgba(0,0,0,.70);
 		margin-bottom: 16px;
 	}
 
-	.r-group{
+	.l-group{
 		margin-bottom: 12px;
 	}
 
-	.r-label{
+	.l-label{
 		display:block;
 		font-weight: 700;
 		color: rgba(0,0,0,.75);
@@ -80,7 +75,7 @@
 		font-size: .95rem;
 	}
 
-	.r-field{
+	.l-field{
 		width:100%;
 		padding: 12px 12px;
 		border-radius: 14px;
@@ -92,46 +87,51 @@
 		transition: .15s ease;
 	}
 
-	.r-field::placeholder{
+	.l-field::placeholder{
 		color: rgba(0,0,0,.45);
 	}
 
-	.r-field:focus{
+	.l-field:focus{
 		border-color: rgba(0,0,0,.55);
 		box-shadow: 0 0 0 4px rgba(0,0,0,.18);
 	}
 
-	.terms{
+	.l-row{
 		display:flex;
-		align-items:flex-start;
+		align-items:center;
+		justify-content:space-between;
 		gap:10px;
-		margin: 10px 0 14px;
-		color: rgba(0,0,0,.72);
+		margin: 8px 0 14px;
+		flex-wrap:wrap;
+	}
+
+	.remember{
+		display:flex;
+		align-items:center;
+		gap:8px;
+		color: rgba(0,0,0,.75);
 		font-weight: 700;
-		line-height:1.35;
 		user-select:none;
 	}
 
-	.terms input{
+	.remember input{
 		width:16px;
 		height:16px;
-		margin-top: 3px;
 		accent-color: #111;
 	}
 
-	.r-link{
+	.l-link{
 		color: rgba(0,0,0,.85);
 		font-weight: 800;
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
 
-	.r-link:hover{
+	.l-link:hover{
 		opacity:.85;
 	}
 
-	/* same button style as login/search */
-	.r-btn{
+	.l-btn{
 		width:100%;
 		padding: 12px 20px;
 		border-radius: 14px;
@@ -146,17 +146,17 @@
 		margin-top: 6px;
 	}
 
-	.r-btn:hover{
+	.l-btn:hover{
 		transform: translateY(-1px);
 		background: rgba(0,0,0,1);
 	}
 
-	.r-btn:focus{
+	.l-btn:focus{
 		outline:none;
 		box-shadow: 0 0 0 4px rgba(0,0,0,.22);
 	}
 
-	.r-bottom{
+	.l-bottom{
 		text-align:center;
 		margin-top: 14px;
 		color: rgba(0,0,0,.70);
@@ -164,8 +164,10 @@
 	}
 
 	@media (max-width: 520px){
-		#r-title{ font-size: 1.6rem; }
+		#l-title{ font-size: 1.6rem; }
+		.l-row{ justify-content:center; }
 	}
 </style>
 
 </x-layout>
+
