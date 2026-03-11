@@ -12,6 +12,7 @@ class SegmentSeeder extends Seeder
         $routes = DB::table('routes')->select('id')->get();
 
         $rows = [];
+
         foreach ($routes as $route) {
             $stops = DB::table('stops')
                 ->where('route_id', $route->id)
@@ -19,16 +20,15 @@ class SegmentSeeder extends Seeder
                 ->get()
                 ->values();
 
-
             for ($i = 0; $i < $stops->count(); $i++) {
                 for ($j = $i + 1; $j < $stops->count(); $j++) {
                     $rows[] = [
-                        'route_id'     => $route->id,
+                        'route_id' => $route->id,
                         'from_stop_id' => $stops[$i]->id,
-                        'to_stop_id'   => $stops[$j]->id,
-                        'distance'     => null,
-                        'created_at'   => now(),
-                        'updated_at'   => now(),
+                        'to_stop_id' => $stops[$j]->id,
+                        'distance' => null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ];
                 }
             }

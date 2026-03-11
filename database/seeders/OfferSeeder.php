@@ -10,9 +10,7 @@ class OfferSeeder extends Seeder
 {
     public function run(): void
     {
-        Offer::truncate();
-
-        $cities = ['Rabat','Casablanca','Safi','Agadir','Fes','Marrakech'];
+        $cities = ['Rabat', 'Casablanca', 'Safi', 'Agadir', 'Fes', 'Marrakech'];
 
         $startDate = Carbon::today();
         $daysAhead = 60;
@@ -23,10 +21,12 @@ class OfferSeeder extends Seeder
 
             foreach ($cities as $from) {
                 foreach ($cities as $to) {
-                    if ($from === $to) continue;
+                    if ($from === $to) {
+                        continue;
+                    }
 
                     $times = $this->pickThreeTimes();
-                    $types = ['Standard','Comfort','VIP'];
+                    $types = ['Standard', 'Comfort', 'VIP'];
 
                     for ($i = 0; $i < $offersPerRoutePerDay; $i++) {
                         $time = $times[$i];
@@ -52,13 +52,18 @@ class OfferSeeder extends Seeder
 
     private function pickThreeTimes(): array
     {
-        $pool = ['06:30','08:30','10:30','12:30','14:30','16:30','18:30','20:30'];
+        $pool = ['06:30', '08:30', '10:30', '12:30', '14:30', '16:30', '18:30', '20:30'];
 
         $a = $pool[array_rand($pool)];
-        do { $b = $pool[array_rand($pool)]; } while ($b === $a);
-        do { $c = $pool[array_rand($pool)]; } while ($c === $a || $c === $b);
+        do {
+            $b = $pool[array_rand($pool)];
+        } while ($b === $a);
 
-        return [$a,$b,$c];
+        do {
+            $c = $pool[array_rand($pool)];
+        } while ($c === $a || $c === $b);
+
+        return [$a, $b, $c];
     }
 
     private function basePrice(string $from, string $to): int
@@ -73,7 +78,6 @@ class OfferSeeder extends Seeder
             'Fes|Marrakech'      => 150,
             'Marrakech|Safi'     => 60,
         ];
-
 
         if (isset($baseMap[$key])) {
             return $baseMap[$key];
@@ -101,7 +105,7 @@ class OfferSeeder extends Seeder
 
     private function roundTo5(int $x): int
     {
-        return (int)(round($x / 5) * 5);
+        return (int) (round($x / 5) * 5);
     }
 
     private function pairKey(string $a, string $b): string

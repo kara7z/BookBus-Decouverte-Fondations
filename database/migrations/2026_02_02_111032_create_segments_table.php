@@ -4,24 +4,37 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
-        Schema::table('segments', function (Blueprint $table) {
-            $table->foreignId('trip_id')
-                ->nullable()       
-                ->after('route_id')
-                ->constrained('trips')
+        Schema::create('segments', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('route_id')
+                ->constrained('routes')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->foreignId('from_stop_id')
+                ->constrained('stops')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
+
+            $table->foreignId('to_stop_id')
+                ->constrained('stops')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            $table->unsignedInteger('segment_order')->default(1);
+            $table->decimal('distance', 8, 2)->nullable();
+
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::table('segments', function (Blueprint $table) {
-            $table->dropForeign(['trip_id']);
-            $table->dropColumn('trip_id');
-        });
+        Schema::dropIfExists('segments');
     }
 };

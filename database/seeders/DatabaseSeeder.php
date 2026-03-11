@@ -2,17 +2,24 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory()->create([
-            'name'  => 'SATAS Admin',
-            'email' => 'admin@satas.ma',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@satas.ma'],
+            [
+                'name' => 'SATAS Admin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+            ]
+        );
 
         $this->call([
             CitySeeder::class,
@@ -29,6 +36,8 @@ class DatabaseSeeder extends Seeder
             ScheduleSeeder::class,
             TripSeeder::class,
             AssignmentSeeder::class,
+
+            OfferSeeder::class,
         ]);
     }
 }
