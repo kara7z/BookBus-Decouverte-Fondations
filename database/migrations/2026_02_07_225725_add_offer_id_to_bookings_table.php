@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -17,12 +16,16 @@ return new class extends Migration {
             }
         });
 
-        // make them nullable (no DBAL needed)
+        // make them nullable using Laravel's change() — compatible with SQLite
         if (Schema::hasColumn('bookings', 'trip_id')) {
-            DB::statement('ALTER TABLE bookings MODIFY trip_id BIGINT UNSIGNED NULL');
+            Schema::table('bookings', function (Blueprint $table) {
+                $table->unsignedBigInteger('trip_id')->nullable()->change();
+            });
         }
         if (Schema::hasColumn('bookings', 'segment_id')) {
-            DB::statement('ALTER TABLE bookings MODIFY segment_id BIGINT UNSIGNED NULL');
+            Schema::table('bookings', function (Blueprint $table) {
+                $table->unsignedBigInteger('segment_id')->nullable()->change();
+            });
         }
 
         Schema::table('bookings', function (Blueprint $table) {
